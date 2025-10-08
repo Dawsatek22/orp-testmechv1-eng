@@ -1,1 +1,1 @@
-cad parts and tutorial videos are comming soon
+cad parts and tutorial videos and also better documentation  are comming soon
