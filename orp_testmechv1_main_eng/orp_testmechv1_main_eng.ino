@@ -1,112 +1,92 @@
-
-// This is the code for: orp_testmechv1. It can currently walk only forwards and backwards.
-// This code is supposed to be used with  a esp32 boards with arduino uno r3 like form and a bluetooth gamepad(only Xbox Wireless model 1708 is tested with
-// Like for example the : WeMos D1 R32 ESP32 4Mb Development Board WiFi Bluetooth Dual Core Arduino Uno R3,
-// Or  the : Keyestudio ESP32 PLUS Development Board WROOM-32 module WIFI+Bluetooth Compatible with Arduino
-// Links  for reference are here : https://www.keyestudio.com/products/keyestudio-esp32-plus-development-board-woroom-32-module-wifibluetooth-compatible-with-arduino
-// And 
-// Below are the required headers
-
-#include <Bluepad32.h> // It is recomended to test and try the Bluepad32 out that handles bluetooth connectivity.
-// Link for more info about Bluepad32 is here : https://bluepad32.readthedocs.io/en/latest/
-#include <Wire.h> // for i2c communication 
-#include <Adafruit_PWMServoDriver.h> // to be used with the Adafruit 16-Channel 12-bit PWM/Servo Shield - I2C interface
-// link for reference is here: https://www.adafruit.com/product/1411?srsltid=AfmBOooFUhg39ym1zlCGINfeo1_jCtuc5Lzm2m5x-fd4L2a-6eSOJQRq
-
-
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40); // default address for the PWM/servoshield
-// below are the minium and maximum values for the mg996R servo motors
-int minval = 300; // minium
-int maxval = 575; // maximum 
-// below are the puls values and servo values for the mapping of servo position
-int pulsval; 
+#include <Bluepad32.h>
+#include <Wire.h>
+#include <Adafruit_PWMServoDriver.h>
+int minval = 300;
+int maxval = 575;
+int pulsval;
 int servoval;
-// below are the pin integers for the actuators. l stand for leftside of the servos   and r stand for rightside servos of the robot
-int l1 = 0; // left upper servo front
-int l2 = 1; // left lower servo front
-int l3 = 2; // left upper servo back
-int l4 = 3; // left lower servo back
+
+int l1 = 0;
+int l2 = 1;
+int l3 = 2;
+int l4 = 3;
 
 
-int r1 = 4; // right upper servo front 
-int r2 = 5; // right lower servo front
-int r3 = 6; // right upper servo back
-int r4 = 7; // right lower servo back
+int r1 = 4;
+int r2 = 5;
 
-// Below are the button values for the supported xbox wireless gamepad that are used for this project
-int a_btn = 0x0001; // a
-int b_btn = 0x0002; // b
-int y_btn = 0x0008; // y
-int x_btn = 0x0004; // x
+
+int r3 = 6;
+int r4 = 7;
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40);
 
 ControllerPtr myControllers[BP32_MAX_GAMEPADS];
-void calib() { // calibrates servo position to 90 degrees
+void calib() {
     // a
-   pwm.setPWM(l1,90,servoval);
+   pwm.setPWM(l1,0,servoval);
        // a
 
      pwm.setPWM(l2,90,servoval);
-      pwm.setPWM(l3,90,servoval);
+      pwm.setPWM(l3,0,servoval);
        pwm.setPWM(l4,90,servoval);
     
-     pwm.setPWM(r1,90,servoval);
+     pwm.setPWM(r1,180,servoval);
      pwm.setPWM(r2,90,servoval);
-     pwm.setPWM(r3,90,servoval);
+     pwm.setPWM(r3,180,servoval);
      pwm.setPWM(r4,90,servoval);
 
        Serial.print("servo calibrated");
 
 }
+void setl1() {
 
+ pwm.setPWM(l1,90,servoval);
+ pwm.setPWM(l2,90,servoval);
+     pwm.setPWM(0,90,servoval);
+     
+Serial.println("servo angle goes to 90 ange degrees");
+}
+
+
+void setl2() {
+  // b button
+ pwm.setPWM(l2,0,servoval);
+     pwm.setPWM(l2,0,servoval);
+Serial.println("servo angle goes to 0 ange degrees");
+}
+void sweepl2() {
+
+ pwm.setPWM(l1,0,servoval);
+
+ pwm.setPWM(l2,0,servoval);
+ Serial.println("sweep" );
+ delay(200);
+
+pwm.setPWM(l2,90,servoval);
+ Serial.println("sweep to 90 angle");
 
 }
 
 
-void sweepback() { // walks backwards
+void sweepback() {
 // b button
-
-
-pwm.setPWM(l1,150,servoval);
-pwm.setPWM(l3,150,servoval);
-
-pwm.setPWM(r1,30,servoval);
-pwm.setPWM(r3,30,servoval);
-
-pwm.setPWM(l2,90,servoval);
-pwm.setPWM(l4,90,servoval);
-
-pwm.setPWM(r2,90,servoval);
-pwm.setPWM(r4,90,servoval);
-delay(200);
-
- pwm.setPWM(l1,90,servoval);
+ pwm.setPWM(l1,180,servoval);
 
  pwm.setPWM(l2,90,servoval);
 
 
- pwm.setPWM(l3,90,servoval);
+ pwm.setPWM(l3,140,servoval);
 
  pwm.setPWM(l4,90,servoval);
 
-  pwm.setPWM(r1,90,servoval);
+  pwm.setPWM(r1,180,servoval);
 
 
- pwm.setPWM(r2,90,servoval);
-   pwm.setPWM(r3,90,servoval);
- pwm.setPWM(r4,90,servoval);
+ pwm.setPWM(r2,0,servoval);
+   pwm.setPWM(r3,180,servoval);
+ pwm.setPWM(r4,0,servoval);
  Serial.println("sweep" );
-delay(500);
-
-pwm.setPWM(l1,90,servoval);
-pwm.setPWM(l3,90,servoval);
-
-pwm.setPWM(r1,90,servoval);
-pwm.setPWM(r3,90,servoval);
-
-
-pwm.setPWM(l2,90,servoval);
-pwm.setPWM(l4,90,servoval);
-
+delay(200);
 pwm.setPWM(l2,90,servoval);
 pwm.setPWM(l4,90,servoval);
 
@@ -115,59 +95,33 @@ pwm.setPWM(r4,90,servoval);
  Serial.println("sweep to 90 angle");
 
 }
-void sweepforward() {  // walks forwards
-// y button
- Serial.println("going_forward");
+void sweepforward() {
+
+ pwm.setPWM(l1,0,servoval);
+
+ pwm.setPWM(l2,0,servoval);
 
 
-pwm.setPWM(l1,20,servoval);
-pwm.setPWM(l3,20,servoval);
+ pwm.setPWM(l3,0,servoval);
 
-pwm.setPWM(r1,150,servoval);
-pwm.setPWM(r3,150,servoval);
+ pwm.setPWM(l4,0,servoval);
 
-pwm.setPWM(l2,90,servoval);
-pwm.setPWM(l4,90,servoval);
-
-pwm.setPWM(r2,90,servoval);
-pwm.setPWM(r4,90,servoval);
-delay(200);
+  pwm.setPWM(r1,180,servoval);
 
 
-pwm.setPWM(l1,90,servoval);
-pwm.setPWM(l3,90,servoval);
-
-pwm.setPWM(r1,90,servoval);
-pwm.setPWM(r3,90,servoval);
+ pwm.setPWM(r2,180,servoval);
+   pwm.setPWM(r3,180,servoval);
+ pwm.setPWM(r4,180,servoval);
+ Serial.println("sweep" );
+ delay(200);
 
 pwm.setPWM(l2,90,servoval);
 pwm.setPWM(l4,90,servoval);
 
 pwm.setPWM(r2,90,servoval);
 pwm.setPWM(r4,90,servoval);
-delay(500);
+ Serial.println("sweep to 90 angle");
 
-
-pwm.setPWM(l1,90,servoval);
-pwm.setPWM(l3,90,servoval);
-
-pwm.setPWM(r1,90,servoval);
-pwm.setPWM(r3,90,servoval);
-
-pwm.setPWM(l2,90,servoval);
-pwm.setPWM(l4,90,servoval);
-
-pwm.setPWM(r2,90,servoval);
-pwm.setPWM(r4,90,servoval);
-
-
-/*
- pwm.setPWM(l1,70,servoval);
-pwm.setPWM(l3,70,servoval);
-
-pwm.setPWM(r1,110,servoval);
-pwm.setPWM(r3,110,servoval);
-delay(200); */
 }
 
 // This callback gets called any time a new gamepad is connected.
@@ -209,7 +163,7 @@ void onDisconnectedController(ControllerPtr ctl) {
     }
 }
 
-void dumpGamepad(ControllerPtr ctl) { // this print the button and joystick values
+void dumpGamepad(ControllerPtr ctl) {
     Serial.printf(
         "idx=%d, dpad: 0x%02x, buttons: 0x%04x, axis L: %4d, %4d, axis R: %4d, %4d, brake: %4d, throttle: %4d, "
         "misc: 0x%02x, gyro x:%6d y:%6d z:%6d, accel x:%6d y:%6d z:%6d\n",
@@ -242,17 +196,23 @@ void processGamepad(ControllerPtr ctl) {
     // There are different ways to query whether a button is pressed.
     // By query each button individually:
     //  a(), b(), x(), y(), l1(), etc...
-    if (ctl->buttons() == a_btn) {
+    if (ctl->a()) {
   calib();
     }
 
-    if (ctl->buttons() == b_btn) {
+    if (ctl->b()) {
        
 sweepback();
     }
 
+    if (ctl->x()) {
+    
 
-if (ctl->buttons() ==  y_btn) {
+    sweepl2();
+
+    }
+
+if (ctl->y()) {
    sweepforward();
 
 }
@@ -304,10 +264,9 @@ void setup() {
     // - Second one, which is a "virtual device", is a mouse.
     // By default, it is disabled.
     BP32.enableVirtualDevice(false);
-
-    servoval = map(pulsval,0,180,minval,maxval); // the mapped servo values
-     pwm.begin(); // wm begins
-    pwm.setOscillatorFrequency(27000000); // oscillator frequency set
+    servoval = map(pulsval,0,180,minval,maxval);
+     pwm.begin();
+    pwm.setOscillatorFrequency(27000000);
   pwm.setPWMFreq(50);  // This is the maximum PWM frequency
 }
 
