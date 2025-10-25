@@ -1,0 +1,79 @@
+timestamps
+00:00 Warnings and summary:
+00:10 Recomended skills.
+00:20 assembeling the right leg.
+10:28 Assembeling the left leg.
+20:40: adding the board holder to the plate.
+24:47 add the Then add the recomended esp32 board to the parts
+with 4x m2.5x6mm screws.
+25:08: add the legs to the robot arm.
+27:22 test and check a power supply.
+31:28: add jumper wires
+34:43test and run the robot.
+
+36:00 wireless: For wireless control guide
+36:25 Quick honorable mentions
+***
+
+***Warnings and summary:
+The tutorial instruction is explained in the eng_list.
+The list of tools and materials  is put in here below.
+This is a project that supposed to be improved overtime so it is not perfect
+but fuctional,This project works with voltages from 3.3V to 9V
+so it is better to be careful with it.It is recommended to check if you can afford 
+the parts and material that is neede,In the tutorial the motor shield is soldered before hand.
+There were changes made mid recording so material may looks diffirent overtime
+If something is wrong or missing can you please
+comment about it so i can fix the issue
+
+*** Recomended skills:
+Programming arduino or esp32 boards,
+3d printing or buying 3d printed parts,
+screwing screws and nuts. connecting bluetooth gamepad to a esp32 board
+
+***materials  and tools:
+1x  5.5mm x 2.1mm dc power connector male
+1x  5.5mm x 2.1mm dc power connector female
+1x allen wrench for m3 head cap screws
+1x allen wrench for m2 head cap screws
+1x flat-head screwdriver
+4x AA batteries
+1x 4xAA batteries holder
+1x 9V batterij
+1x 9V Battery Clip
+1x WeMos D1 R32 ESP32 4Mb Development Board WiFi Bluetooth Dual Core Arduino Uno R3 or
+Keyestudio ESP32 PLUS Development Board WROOM-32 module WIFI+Bluetooth Compatible with Arduino
+1x Xbox Wireless model 1708 controller  or other bluetooth controlled gamepad compatable with Bluepad32
+1x Adafruit 16-Channel 12-bit PWM/Servo Shield (with pins and condensator  soldered)
+8x MG996R servos
+12x 20mm m/f dupont wires 
+12x 50mm m/f dupont wires
+2x 20mm m/m dupont wires 
+1x laptop/pc with usb connection
+1x usb c or micro usb cable for microcontroler
+1x 1000 uf condensator (soldered to servo hat)
+****screws and nuts:
+16x m4 nuts
+16x m4x14 mm
+16x m3m6mm head cap screws hex
+4x m2.5x6mm head cap screws hex
+44x m3 nuts
+
+4x m3x12mm head cap screws hex
+18x m3x16  head cap screws hex
+
+****3d printed parts(pla recomendended with high infill):
+8x dt22-202-orp_extender60mmmg996r_v_angular.stl
+4x dt22-202-mgr996r_paw.stl
+8x dt22-202-mg996r_bottom.stl
+1x JanSpiesZA-56-ORP_Arduino_UNO_holder-Body.stl
+1x nikodembartnik-4-plate_160mm.3mf
+1x dt22-68-batteryHolder6V-12-2X_18650.stl
+
+***Optional stl:
+
+2x dt22-192-standoff_setv1-standoff90mm.stl (for stationing a nikodembartnik-4-plate_160mm.3mf
+                                          if needed)
+1x Tenda-59-9V.3mf (for the 9v batterij)
+    
+    
