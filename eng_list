@@ -22,6 +22,7 @@ This is a project that supposed to be improved overtime so it is not perfect
 but fuctional,This project works with voltages from 3.3V to 9V
 so it is better to be careful with it.It is recommended to check if you can afford 
 the parts and material that is neede,In the tutorial the motor shield is soldered before hand.
+The servos need to calibrated to 90 degrees angles before attaching together with the robot.
 There were changes made mid recording so material may looks diffirent overtime
 If something is wrong or missing can you please
 comment about it so i can fix the issue
